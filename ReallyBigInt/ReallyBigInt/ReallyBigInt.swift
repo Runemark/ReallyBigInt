@@ -9,7 +9,7 @@
 import Foundation
 
 // TODO, change this to a STRUCT instead of a CLASS
-class BigInt {
+class ReallyBigInt {
     
     
     
@@ -58,10 +58,12 @@ class BigInt {
     {
         self.init()
         
-//        for magIndex in 0..<mag
-//        {
-//            
-//        }
+        for magIndex in 0..<mag
+        {
+            digits.append(0)
+        }
+        
+        digits.append(1)
     }
     
     init()
@@ -74,6 +76,7 @@ class BigInt {
         return digits.count
     }
     
+    // A 3-Digit representation of any number
     func shortString() -> String
     {
         // Determine the magnitude of the highest digit
@@ -130,6 +133,52 @@ class BigInt {
         {
             modifier = "Dc"
         }
+        else if (hDig < 39)
+        {
+            modifier = "UnDc"
+        }
+        else if (hDig < 42)
+        {
+            modifier = "DuDc"
+        }
+        else if (hDig < 45)
+        {
+            modifier = "TrDc"
+        }
+        else if (hDig < 48)
+        {
+            modifier = "QuDc"
+        }
+        else if (hDig < 51)
+        {
+            modifier = "QiDc"
+        }
+        else if (hDig < 54)
+        {
+            modifier = "SxDc"
+        }
+        else if (hDig < 56)
+        {
+            modifier = "SpDc"
+        }
+        else if (hDig < 60)
+        {
+            modifier = "OcDc"
+        }
+        else if (hDig < 63)
+        {
+            modifier = "NoDc"
+        }
+        else if (hDig < 66)
+        {
+            modifier = "Vg"
+        }
+        else
+        {
+            // Too large for standard naming conventions, use scientific notation
+            modifier = "e\(hDig)"
+            // This digit may/maynot be a few digits off (TODO: VERIFY)
+        }
         
         // Determine which of the three positions the most significant bit is held
         // ...,ABC,ABC,ABC,...
@@ -172,7 +221,7 @@ class BigInt {
 // OPERATORS
 /////////////////////////////////////////////////////////////////////////////////////
 
-func == (left:BigInt, right:BigInt) -> Bool
+func == (left:ReallyBigInt, right:ReallyBigInt) -> Bool
 {
     if (left.length() > right.length())
     {
@@ -204,39 +253,7 @@ func == (left:BigInt, right:BigInt) -> Bool
     }
 }
 
-func > (left:BigInt, right:BigInt) -> Bool
-{
-    if (left.length() > right.length())
-    {
-        return true
-    }
-    else if (left.length() < right.length())
-    {
-        return false
-    }
-    else
-    {
-        // Compare digit-by-digit, from the highest to the lowest
-        for highestDigitIndex in reverse(0..<left.length())
-        {
-            let leftDigit = left.digits[highestDigitIndex]
-            let rightDigit = right.digits[highestDigitIndex]
-            
-            if (leftDigit > rightDigit)
-            {
-                return true
-            }
-            else if (leftDigit < rightDigit)
-            {
-                return false
-            }
-        }
-        
-        return false
-    }
-}
-
-func >= (left:BigInt, right:BigInt) -> Bool
+func > (left:ReallyBigInt, right:ReallyBigInt) -> Bool
 {
     if (left.length() > right.length())
     {
@@ -264,11 +281,43 @@ func >= (left:BigInt, right:BigInt) -> Bool
             }
         }
         
+        return false
+    }
+}
+
+func >= (left:ReallyBigInt, right:ReallyBigInt) -> Bool
+{
+    if (left.length() > right.length())
+    {
+        return true
+    }
+    else if (left.length() < right.length())
+    {
+        return false
+    }
+    else
+    {
+        // Compare digit-by-digit, from the highest to the lowest
+        for highestDigitIndex in reverse(0..<left.length())
+        {
+            let leftDigit = left.digits[highestDigitIndex]
+            let rightDigit = right.digits[highestDigitIndex]
+            
+            if (leftDigit > rightDigit)
+            {
+                return true
+            }
+            else if (leftDigit < rightDigit)
+            {
+                return false
+            }
+        }
+        
         return true
     }
 }
 
-func < (left:BigInt, right:BigInt) -> Bool
+func < (left:ReallyBigInt, right:ReallyBigInt) -> Bool
 {
     if (left.length() < right.length())
     {
@@ -300,7 +349,7 @@ func < (left:BigInt, right:BigInt) -> Bool
     }
 }
 
-func <= (left:BigInt, right:BigInt) -> Bool
+func <= (left:ReallyBigInt, right:ReallyBigInt) -> Bool
 {
     if (left.length() < right.length())
     {
@@ -333,12 +382,12 @@ func <= (left:BigInt, right:BigInt) -> Bool
 }
 
 // Addition is done exactly like in grade school, using the old-fashioned manual "carry the one" method
-func + (left:BigInt, right:BigInt) -> BigInt
+func + (left:ReallyBigInt, right:ReallyBigInt) -> ReallyBigInt
 {
     let bufferLength = max(left.length(), right.length())+1
     var carryBuffer = Array<Bool>(count:bufferLength, repeatedValue:false)
     
-    var result = BigInt()
+    var result = ReallyBigInt()
     
     for index in 0..<bufferLength
     {
@@ -376,7 +425,7 @@ func + (left:BigInt, right:BigInt) -> BigInt
 }
 
 infix operator  += { associativity left precedence 140 }
-func += (inout left:BigInt, right:BigInt) {
+func += (inout left:ReallyBigInt, right:ReallyBigInt) {
     left = left + right
 }
 
