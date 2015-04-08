@@ -76,6 +76,44 @@ class ReallyBigInt {
         return digits.count
     }
     
+    // Returns the most significant three digits of the short form {(123 in 123K), (12.3 in 12.3K), (1.23 in 1.23K)}
+    func threeDigitValue() -> Double
+    {
+        let hDig = length()-1
+        
+        var threeDigitValue = 0.00
+        
+        switch hDig
+        {
+            case 0:
+                threeDigitValue = Double(digits[0])
+                break
+            case 1:
+                threeDigitValue = Double(digits[1]*10 + digits[0])
+                break
+            default:
+                
+                let position = hDig % 3
+                
+                switch position
+                {
+                case 0:
+                    threeDigitValue = Double(digits[hDig]) + Double(digits[hDig-1])*0.10 + Double(digits[hDig-2])*0.01
+                    break
+                case 1:
+                    threeDigitValue = Double(digits[hDig])*10.0 + Double(digits[hDig-1]) + Double(digits[hDig-2])*0.10
+                    break
+                default:
+                    threeDigitValue = Double(digits[hDig])*100 + Double(digits[hDig-1])*10.0 + Double(digits[hDig-2])
+                    break
+                }
+                
+                break
+        }
+        
+        return threeDigitValue
+    }
+    
     // A 3-Digit representation of any number
     func shortString() -> String
     {
