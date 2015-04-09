@@ -21,6 +21,7 @@ class ReallyBigInt {
     
     // TODO, possibly change this to a [UInt8] array for efficiency
     var digits = [Int]()
+    var positive = true
     
     // Initialize with a String (for really, really large numbers)
     convenience init(numString:String)
@@ -251,7 +252,8 @@ class ReallyBigInt {
             break
         }
         
-        return numeralValue + modifier
+        let sign = (positive) ? "" : "-"
+        return sign + numeralValue + modifier
     }
 }
 
@@ -460,6 +462,68 @@ func + (left:ReallyBigInt, right:ReallyBigInt) -> ReallyBigInt
     }
     
     return result
+}
+
+func - (left:ReallyBigInt, right:ReallyBigInt) -> ReallyBigInt
+{
+    let bufferLength = max(left.length(), right.length())
+    var carryBuffer = Array<Bool>(count:bufferLength, repeatedValue:false)
+    
+    if (right > left)
+    {
+        var result = right - left
+        result.positive = false
+        return result
+    }
+    else
+    {
+        var result = ReallyBigInt()
+        
+        for index in 0..<bufferLength
+        {
+            var leftDigit = 0
+            var rightDigit = 0
+            
+            if (index < left.length())
+            {
+                leftDigit = left.digits[index]
+            }
+            if (index < right.length())
+            {
+                rightDigit = right.digits[index]
+            }
+            
+            if (carryBuffer[index])
+            {
+                leftDigit -= 1
+            }
+            
+            if (leftDigit >= rightDigit)
+            {
+                // simply subtract
+                result.digits.append(leftDigit - rightDigit)
+            }
+            else
+            {
+                carryBuffer[index+1] = true
+                result.digits.append(leftDigit+10 - rightDigit)
+            }
+        }
+        
+        // Eliminate any trailing zeroes
+        var digitIndex = bufferLength-1
+        var digit = result.digits[digitIndex]
+        while (digit == 0 && digitIndex > 0)
+        {
+            result.digits.removeLast()
+            
+            digitIndex--
+            
+            digit = result.digits[digitIndex]
+        }
+        
+        return result
+    }
 }
 
 infix operator  += { associativity left precedence 140 }

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>23711641-B5F2-4E6E-93C5-E8EC9E230268</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ReallyBigInt</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>FCCF56831B589E72F01BD34984BD854EDA0BEFB2</key>
+		<string>https://github.com/Runemark/ReallyBigInt.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ReallyBigInt/ReallyBigInt.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>FCCF56831B589E72F01BD34984BD854EDA0BEFB2</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/Runemark/ReallyBigInt.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>FCCF56831B589E72F01BD34984BD854EDA0BEFB2</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>FCCF56831B589E72F01BD34984BD854EDA0BEFB2</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ReallyBigInt</string>
+		</dict>
+	</array>
+</dict>
+</plist>
