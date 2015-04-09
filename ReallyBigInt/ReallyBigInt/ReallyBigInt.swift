@@ -30,10 +30,17 @@ class ReallyBigInt {
         
         for character in reverse(Array(numString))
         {
-            let digit = String(character).toInt()
-            if (digit != nil)
+            if (character == "-")
             {
-                digits.append(digit!)
+                positive = false
+            }
+            else
+            {
+                let digit = String(character).toInt()
+                if (digit != nil)
+                {
+                    digits.append(digit!)
+                }
             }
         }
     }
@@ -44,6 +51,12 @@ class ReallyBigInt {
         self.init()
         
         var tempNum = num
+        if (num < 0)
+        {
+            positive = false
+            tempNum = num * -1
+        }
+        
         while (tempNum >= 10)
         {
             let digit = tempNum % 10
@@ -54,7 +67,7 @@ class ReallyBigInt {
         digits.append(tempNum)
     }
     
-    // Initialize with an order of magnitude (10^mag)
+    // Initialize with an order of magnitude (10^mag), only supports positive magnitudes
     convenience init(mag:Int)
     {
         self.init()
@@ -112,10 +125,15 @@ class ReallyBigInt {
                 break
         }
         
+        if (!positive)
+        {
+            threeDigitValue = threeDigitValue * -1
+        }
+        
         return threeDigitValue
     }
     
-    // A 3-Digit representation of any number
+    // A 3-Digit string representation of any number
     func shortString() -> String
     {
         // Determine the magnitude of the highest digit
@@ -263,6 +281,11 @@ class ReallyBigInt {
 
 func == (left:ReallyBigInt, right:ReallyBigInt) -> Bool
 {
+    if (left.positive != right.positive)
+    {
+        return false
+    }
+    
     if (left.length() > right.length())
     {
         return false
@@ -292,6 +315,11 @@ func == (left:ReallyBigInt, right:ReallyBigInt) -> Bool
         return true
     }
 }
+
+
+/// CONTINUE SUPPORTING NEGATIVE OPERATIONS AT THIS POINT
+// WARXING: CONTINUE, TODO
+
 
 func > (left:ReallyBigInt, right:ReallyBigInt) -> Bool
 {
